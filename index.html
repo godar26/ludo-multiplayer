@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>Ludo en ligne — Salon de jeu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="table-glow"></div>
+
+<div id="app">
+
+  <!-- =========================== ECRAN ACCUEIL =========================== -->
+  <section id="screen-home" class="screen active">
+    <div class="home-card">
+      <div class="brand">
+        <span class="brand-die">
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        </span>
+        <h1>Ludo<span class="brand-accent">Table</span></h1>
+      </div>
+      <p class="tagline">Le plateau classique, en ligne, entre amis. 2 à 4 joueurs.</p>
+
+      <label class="field">
+        <span class="field-label">Votre pseudo</span>
+        <input id="input-name" type="text" maxlength="16" placeholder="Ex. Yasmine" autocomplete="off" />
+      </label>
+
+      <div class="home-actions">
+        <button id="btn-create" class="btn btn-primary">Créer une partie</button>
+        <button id="btn-show-join" class="btn btn-ghost">Rejoindre une partie</button>
+      </div>
+
+      <div id="join-panel" class="join-panel hidden">
+        <label class="field">
+          <span class="field-label">Code du salon</span>
+          <input id="input-code" type="text" maxlength="5" placeholder="EX. 7K2LM" autocomplete="off" />
+        </label>
+        <button id="btn-join" class="btn btn-primary">Rejoindre</button>
+      </div>
+
+      <p id="home-error" class="error-msg hidden"></p>
+    </div>
+  </section>
+
+  <!-- =========================== ECRAN SALON =========================== -->
+  <section id="screen-lobby" class="screen">
+    <div class="lobby-card">
+      <h2>Salon d'attente</h2>
+      <p class="lobby-sub">Partagez ce code pour inviter jusqu'à 3 amis :</p>
+
+      <div class="room-code-box">
+        <span id="room-code-value">-----</span>
+        <button id="btn-copy-code" class="btn-icon" title="Copier le code">⧉</button>
+      </div>
+
+      <div id="lobby-players" class="lobby-players"></div>
+
+      <p id="lobby-hint" class="lobby-hint">En attente d'autres joueurs (minimum 2)…</p>
+
+      <div class="lobby-actions">
+        <button id="btn-start-game" class="btn btn-primary" disabled>Lancer la partie</button>
+        <button id="btn-leave-lobby" class="btn btn-ghost">Quitter le salon</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== ECRAN JEU =========================== -->
+  <section id="screen-game" class="screen">
+    <header class="game-header">
+      <div class="game-header-left">
+        <span class="brand-die small">
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        </span>
+        <span class="header-title">LudoTable</span>
+        <span class="header-code">Salon <b id="game-room-code">-----</b></span>
+      </div>
+      <div id="turn-indicator" class="turn-indicator">—</div>
+    </header>
+
+    <main class="game-main">
+      <div class="board-wrap">
+        <div id="board" class="board"></div>
+      </div>
+
+      <aside class="side-panel">
+        <div class="players-panel" id="players-panel"></div>
+
+        <div class="dice-panel">
+          <div id="dice" class="dice" aria-label="Dé">
+            <div class="dice-face" id="dice-face"></div>
+          </div>
+          <button id="btn-roll" class="btn btn-primary" disabled>Lancer le dé</button>
+          <p id="dice-hint" class="dice-hint">En attente…</p>
+        </div>
+
+        <div class="log-panel">
+          <div class="log-header">Journal de partie</div>
+          <div id="log-list" class="log-list"></div>
+          <form id="chat-form" class="chat-form">
+            <input id="chat-input" type="text" maxlength="200" placeholder="Écrire un message…" autocomplete="off" />
+            <button type="submit" class="btn-icon" title="Envoyer">➤</button>
+          </form>
+        </div>
+      </aside>
+    </main>
+  </section>
+
+  <!-- =========================== MODALE FIN DE PARTIE =========================== -->
+  <div id="modal-gameover" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div id="modal-icon" class="modal-icon">🏆</div>
+      <h2 id="modal-title">Partie terminée</h2>
+      <p id="modal-text"></p>
+      <button id="btn-modal-home" class="btn btn-primary">Retour à l'accueil</button>
+    </div>
+  </div>
+
+  <!-- =========================== TOAST ERREUR (en jeu) =========================== -->
+  <div id="toast" class="toast hidden"></div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="client.js"></script>
+</body>
+</html>
