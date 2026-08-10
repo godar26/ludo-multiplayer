@@ -189,15 +189,17 @@ button { font-family: inherit; cursor: pointer; }
 /* =============================================================
    Ecran accueil
    ============================================================= */
-#screen-home {
-  min-height: 100vh;
+.screen {
   display: none;
+}
+#screen-home.active,
+#screen-lobby.active {
+  display: flex;
+  min-height: 100vh;
   align-items: center;
   justify-content: center;
   padding: 24px;
 }
-.screen.active { display: flex; }
-#screen-lobby.active { display: flex; }
 #screen-game.active { display: block; }
 
 .home-card {
@@ -217,12 +219,6 @@ button { font-family: inherit; cursor: pointer; }
 /* =============================================================
    Ecran salon (lobby)
    ============================================================= */
-#screen-lobby {
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
 .lobby-card {
   width: 100%;
   max-width: 460px;
