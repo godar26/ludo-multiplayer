@@ -7,7 +7,14 @@
  * (lancer le de, deplacer un pion). Le serveur reste seul juge.
  */
 
-const socket = io();
+const socket = io({
+  path: '/api/socket-io/socket.io',
+  transports: ['websocket'],
+  reconnection: true,
+  reconnectionAttempts: Infinity,
+  reconnectionDelay: 1000,
+  reconnectionDelayMax: 10000,
+});
 
 // ---------------------------------------------------------------------------
 // Constantes de rendu du plateau (doivent correspondre visuellement au
