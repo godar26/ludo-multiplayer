@@ -4,7 +4,9 @@
  * Les salons sont persistés dans Upstash Redis et Socket.IO diffuse
  * les événements entre les instances Vercel via son adaptateur Redis.
  */
+const express = require('express');
 const http = require('http');
+const path = require('path');
 const crypto = require('crypto');
 const { Server } = require('socket.io');
 const Redis = require('ioredis');
@@ -25,7 +27,10 @@ for (const [name, client] of [['Redis', redis], ['Redis subscriber', subClient]]
   client.on('error', (error) => console.error(name + ' error:', error.message));
 }
 
-const server = http.createServer();
+const app = express();
+// Sert l'interface HTML/CSS/JS lorsque la requête passe par cette fonction.
+app.use(express.static(__dirname));
+const server = http.createServer(app);
 const io = new Server(server, {
   path: '/api/socket-io/socket.io',
   transports: ['websocket'],
